@@ -1,0 +1,14 @@
+name: jenkins-maven-cd
+description: Deploys a Maven project to the Jenkins Artifactory repository in continuous delivery style.
+inputs:
+  GITHUB_TOKEN:
+    required: true
+  ARTIFACTORY_USERNAME:
+    required: true
+  ARTIFACTORY_TOKEN:
+    required: true
+runs:
+  using: composite
+  steps: 
+    - run: GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN }} ARTIFACTORY_USERNAME=${{ inputs.ARTIFACTORY_USERNAME }} ARTIFACTORY_TOKEN=${{ inputs.ARTIFACTORY_TOKEN }} $GITHUB_ACTION_PATH/run.sh
+      shell: bash
