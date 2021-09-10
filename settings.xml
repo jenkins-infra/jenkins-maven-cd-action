@@ -3,8 +3,14 @@
     <servers>
         <server>
             <id>maven.jenkins-ci.org</id>
-            <username>${env.MAVEN_USERNAME}</username>
-            <password>${env.MAVEN_TOKEN}</password>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Authorization</name>
+                        <value>Bearer ${env.MAVEN_TOKEN}</value>
+                    </property>
+                </httpHeaders>
+            </configuration>
         </server>
     </servers>
 </settings>
