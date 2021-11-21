@@ -14,8 +14,14 @@ inputs:
       By default excludes 📦📝👻🚦 under the assumption these do not normally merit a release.
       Ignored when using workflow_dispatch (explicit release); when using the check_run trigger (automatic), the release is skipped unless the draft changelog matches.
     default: '[💥🚨🎉🐛⚠🚀👷]|:(boom|tada|construction_worker):'
+  NO_CHANGELIST:
+    required: true
+    description: |
+      If specified, the release won't have an incremental suffix. Instead it will just be "project.revision" from pom.xml.
+      By default uses such incremental suffix. Set to a truthy value (e.g. '1') to prevent an incremental suffix.
+    default: ''
 runs:
   using: composite
   steps: 
-    - run: GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN }} MAVEN_USERNAME=${{ inputs.MAVEN_USERNAME }} MAVEN_TOKEN=${{ inputs.MAVEN_TOKEN }} INTERESTING_CATEGORIES='${{ inputs.INTERESTING_CATEGORIES }}' $GITHUB_ACTION_PATH/run.sh
+    - run: GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN }} MAVEN_USERNAME=${{ inputs.MAVEN_USERNAME }} MAVEN_TOKEN=${{ inputs.MAVEN_TOKEN }} INTERESTING_CATEGORIES='${{ inputs.INTERESTING_CATEGORIES }}' NO_CHANGELIST='${{ inputs.NO_CHANGELIST }}' $GITHUB_ACTION_PATH/run.sh
       shell: bash
