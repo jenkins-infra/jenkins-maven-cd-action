@@ -11,8 +11,14 @@ then # JEP-229
     version=$(mvn -B -ntp -Dset.changelist -Dexpression=project.version -q -DforceStdout help:evaluate)
     gh api -F ref=refs/tags/$version -F sha=$GITHUB_SHA /repos/$GITHUB_REPOSITORY/git/refs
 else # MRP
-    git config user.email cd@jenkins.io
-    git config user.name "jenkins-maven-cd-action in $GITHUB_REPOSITORY"
+    echo >> ~/.gitconfig <<EOF
+[user]
+    name = jenkins-maven-cd-action
+    email = noreply@jenkins.io
+[url "https://github.com/"]
+    insteadOf = git@github.com:
+EOF
+    echo https://git:$GITHUB_TOKEN@github.com >> ~/.git-credentials
     mvn -B -V -s $GITHUB_ACTION_PATH/settings.xml -ntp -Dstyle.color=always -P\!consume-incrementals -Darguments='-Pquick-build -ntp' validate release:prepare release:perform
     git checkout HEAD^ # tagged version, rather than prepare for next development version
     version=$(mvn -B -ntp -Dexpression=project.version -q -DforceStdout help:evaluate)
