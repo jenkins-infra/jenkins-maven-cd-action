@@ -19,6 +19,7 @@ else # MRP
     insteadOf = git@github.com:
 EOF
     echo https://git:$GITHUB_TOKEN@github.com >> ~/.git-credentials
+    git config -l # TODO debugging
     mvn -B -V -s $GITHUB_ACTION_PATH/settings.xml -ntp -Dstyle.color=always -P\!consume-incrementals -Darguments='-Pquick-build -ntp' validate release:prepare release:perform
     git checkout HEAD^ # tagged version, rather than prepare for next development version
     version=$(mvn -B -ntp -Dexpression=project.version -q -DforceStdout help:evaluate)
