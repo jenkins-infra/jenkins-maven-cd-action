@@ -11,6 +11,7 @@ then # JEP-229
     version=$(mvn -B -ntp -Dset.changelist -Dexpression=project.version -q -DforceStdout help:evaluate)
     gh api -F ref=refs/tags/$version -F sha=$GITHUB_SHA /repos/$GITHUB_REPOSITORY/git/refs
     name=next
+    tag=$version
 else # MRP
     git config --global user.email cd@jenkins.io
     git config --global user.name jenkins-maven-cd-action
@@ -19,6 +20,7 @@ else # MRP
     git checkout HEAD^ # tagged version, rather than prepare for next development version
     version=$(mvn -B -ntp -Dexpression=project.version -q -DforceStdout help:evaluate)
     name=$version # TODO why does this work differently than in JEP-229?
+    tag=$(git describe HEAD) # typically ${project.artifactId}-${version}
 fi
 release=$(gh api /repos/$GITHUB_REPOSITORY/releases | jq -e -r --arg name $name '.[] | select(.draft == true and .name == $name) | .id')
-gh api -X PATCH -F draft=false -F name=$version -F tag_name=$version /repos/$GITHUB_REPOSITORY/releases/$release
+gh api -X PATCH -F draft=false -F name=$version -F tag_name=$tag /repos/$GITHUB_REPOSITORY/releases/$release
