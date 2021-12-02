@@ -14,7 +14,6 @@ else # MRP
     git config --global user.email cd@jenkins.io
     git config --global user.name jenkins-maven-cd-action
     git config --global url.https://github.com/.insteadOf git@github.com:
-    git config -l # TODO debugging
     mvn -B -V -s $GITHUB_ACTION_PATH/settings.xml -ntp -Dstyle.color=always -P\!consume-incrementals -Darguments='-Pquick-build -ntp' validate release:prepare release:perform
     git checkout HEAD^ # tagged version, rather than prepare for next development version
     version=$(mvn -B -ntp -Dexpression=project.version -q -DforceStdout help:evaluate)
