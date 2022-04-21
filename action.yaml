@@ -13,7 +13,7 @@ inputs:
       Regexp of emojis from https://github.com/jenkinsci/.github/blob/master/.github/release-drafter.yml representing changes of interest to users.
       By default excludes 📦📝👻🚦 under the assumption these do not normally merit a release.
       Ignored when using workflow_dispatch (explicit release); when using the check_run trigger (automatic), the release is skipped unless the draft changelog matches.
-    default: '[💥🚨🎉🐛⚠🚀👷]|:(boom|tada|construction_worker):'
+    default: '[💥🚨🎉🐛⚠🚀🌐👷]|:(boom|tada|construction_worker):'
 runs:
   using: composite
   steps: 
