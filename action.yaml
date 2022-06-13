@@ -3,10 +3,13 @@ description: Deploys a Maven project to the Jenkins Artifactory repository in co
 inputs:
   GITHUB_TOKEN:
     required: true
+    description: Token to run with, defaults to the repository GITHUB_TOKEN
   MAVEN_USERNAME:
     required: true
+    description: Maven Username used to release to Jenkins Artifactory repository
   MAVEN_TOKEN:
     required: true
+    description: Maven Token used to release to Jenkins Artifactory repository
   INTERESTING_CATEGORIES:
     required: true
     description: |
@@ -16,6 +19,10 @@ inputs:
     default: '[💥🚨🎉🐛⚠🚀🌐👷]|:(boom|tada|construction_worker):'
 runs:
   using: composite
-  steps: 
-    - run: GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN }} MAVEN_USERNAME=${{ inputs.MAVEN_USERNAME }} MAVEN_TOKEN=${{ inputs.MAVEN_TOKEN }} INTERESTING_CATEGORIES='${{ inputs.INTERESTING_CATEGORIES }}' $GITHUB_ACTION_PATH/run.sh
+  steps:
+    - run: $GITHUB_ACTION_PATH/run.sh
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        MAVEN_USERNAME: ${{ inputs.MAVEN_USERNAME }}
+        INTERESTING_CATEGORIES: ${{ inputs.INTERESTING_CATEGORIES }}
