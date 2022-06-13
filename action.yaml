@@ -6,10 +6,10 @@ inputs:
     description: Token to run with, defaults to the repository GITHUB_TOKEN
   MAVEN_USERNAME:
     required: true
-    description: Maven Username used to release to Jenkins Artifactory repository
+    description: Maven username used for deploying the plugin jar to Jenkins Artifactory Repository
   MAVEN_TOKEN:
     required: true
-    description: Maven Token used to release to Jenkins Artifactory repository
+    description: Maven token used for deploying the plugin jar to Jenkins Artifactory Repository
   INTERESTING_CATEGORIES:
     required: true
     description: |
