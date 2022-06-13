@@ -25,4 +25,5 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         MAVEN_USERNAME: ${{ inputs.MAVEN_USERNAME }}
+        MAVEN_TOKEN: ${{ inputs.MAVEN_TOKEN }}
         INTERESTING_CATEGORIES: ${{ inputs.INTERESTING_CATEGORIES }}
